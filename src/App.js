@@ -1,3 +1,4 @@
+import AuthPage from 'pages/AuthPage.js';
 export default function App() {
-  return <div>Phonebook</div>;
+  return <AuthPage />;
 }
