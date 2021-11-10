@@ -1,5 +1,5 @@
 /* // todo: 1. create mockup of phonebook app with materalui
-      todo  1.1 Create HomePage with login or register form on start
+      *  1.1 Create HomePage with login or register form on start
       todo  1.2 create main ContactsPage with navbar, main content, footer
       todo  1.2.1 create navbar with logo, filter, userinfo
       todo  1.2.2 create main content with list of contacts
