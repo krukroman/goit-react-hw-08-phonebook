@@ -1,25 +1,48 @@
-import { AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Grid, Box } from '@mui/material';
+import SearchBar from 'components/SerachBar/SearchBar';
 import UserInfo from 'components/Userinfo/Userinfo';
 
 export default function Header() {
   return (
-    <AppBar color="transparent" position="static">
+    <AppBar
+      color="primary"
+      position="static"
+      elevation={0}
+      sx={{
+        borderBottom: '1px solid #eee',
+      }}
+    >
       <Toolbar>
-        <Typography
-          component="p"
-          variant="h5"
-          sx={{ fontWeight: 'bold', flexGrow: 1 }}
-        >
-          Phonebook App
-        </Typography>
-        <UserInfo />
-        <Box
-          sx={{
-            px: 1,
-          }}
-        >
-          <Button variant="contained">Sign Out</Button>
-        </Box>
+        <Grid container>
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={3}
+            lg={3}
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                minHeight: '100%',
+              }}
+            >
+              <Typography component="p" variant="h5">
+                Phonebook App
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={10} sm={7} md={7} lg={6}>
+            <SearchBar />
+          </Grid>
+          <Grid item xs={2} sm={1} md={2} lg={3}>
+            <UserInfo />
+          </Grid>
+        </Grid>
       </Toolbar>
     </AppBar>
   );
