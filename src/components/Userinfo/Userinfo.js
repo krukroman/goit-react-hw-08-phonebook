@@ -6,8 +6,6 @@ import {
   MenuItem,
   Divider,
   Typography,
-  Button,
-  Link,
   ListItemIcon,
 } from '@mui/material';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
@@ -49,7 +47,8 @@ export default function UserInfo() {
       >
         <Box
           sx={{
-            p: 1,
+            py: 1,
+            px: 2,
             display: 'flex',
             alignItems: 'center',
           }}
@@ -72,7 +71,7 @@ export default function UserInfo() {
           </ListItemIcon>
           Home page
         </MenuItem>
-        <MenuItem onCllick={onSignOut}>
+        <MenuItem onClick={onSignOut}>
           <ListItemIcon>
             <LogoutOutlinedIcon />
           </ListItemIcon>
