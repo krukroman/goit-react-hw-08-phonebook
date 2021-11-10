@@ -8,13 +8,13 @@ import {
   KeyboardArrowUpIcon,
   Zoom,
 } from '@mui/material';
-import AppBar from 'components/AppBar';
+import Header from 'components/Header';
 
 export default function ContactsPage() {
   return (
     <>
       <CssBaseline />
-      <AppBar />
+      <Header />
     </>
   );
 }
