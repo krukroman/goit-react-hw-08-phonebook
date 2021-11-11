@@ -1,3 +1,4 @@
+import { Link as RouterLink } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
 import UserPic from 'components/UserPic';
 export default function WelcomeLoginedUser() {
@@ -21,7 +22,12 @@ export default function WelcomeLoginedUser() {
       <Typography component="h5" variant="h4" sx={{ mt: 3 }} align="center">
         Welcome User
       </Typography>
-      <Button variant="contained" sx={{ mt: 3 }}>
+      <Button
+        component={RouterLink}
+        to="/contacts"
+        variant="contained"
+        sx={{ mt: 3 }}
+      >
         go to contacts page
       </Button>
     </Box>

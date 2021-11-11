@@ -1,3 +1,4 @@
+import { Link as RouterLink } from 'react-router-dom';
 import { Box, Link, Typography } from '@mui/material';
 export default function WelcomeMain() {
   return (
@@ -25,11 +26,21 @@ export default function WelcomeMain() {
         variant="h5"
         align="center"
       >
-        <Link href="#" variant="h5" underline="hover">
+        <Link
+          component={RouterLink}
+          to="/signin"
+          variant="h5"
+          underline="hover"
+        >
           {'Sign In'}
         </Link>{' '}
         {'with your account or '}
-        <Link href="#" variant="h5" underline="hover">
+        <Link
+          component={RouterLink}
+          to="/signup"
+          variant="h5"
+          underline="hover"
+        >
           {'Sign Up'}
         </Link>{' '}
         {'to start'}

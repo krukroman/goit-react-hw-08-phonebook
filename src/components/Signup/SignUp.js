@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Grid,
   Box,
@@ -9,7 +10,7 @@ import {
   Link,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import HomeButton from 'components/HomeButton';
 
 export default function SignUp() {
   const [name, setName] = useState('');
@@ -49,18 +50,7 @@ export default function SignUp() {
         alignItems: 'center',
       }}
     >
-      <Button
-        variant="contained"
-        startIcon={<ArrowBackOutlinedIcon />}
-        sx={{
-          m: 0,
-          position: 'absolute',
-          top: 10,
-          left: 32,
-        }}
-      >
-        Home
-      </Button>
+      <HomeButton />
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <LockOutlinedIcon />
       </Avatar>
@@ -118,7 +108,7 @@ export default function SignUp() {
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="#" variant="body2">
+            <Link component={RouterLink} to="/signin" variant="body2">
               Already have an account? Sign in
             </Link>
           </Grid>

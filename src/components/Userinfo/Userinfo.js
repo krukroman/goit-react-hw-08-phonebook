@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   IconButton,
@@ -66,7 +67,7 @@ export default function UserInfo() {
           </Box>
         </Box>
         <Divider />
-        <MenuItem>
+        <MenuItem component={RouterLink} to="/">
           <ListItemIcon>
             <HomeOutlinedIcon />
           </ListItemIcon>
