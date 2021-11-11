@@ -20,15 +20,15 @@ function stringToColor(string) {
   return color;
 }
 
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.charAt(0)}`,
-  };
-}
-
-export default function UserPic({ name }) {
-  return <Avatar {...stringAvatar(name)} />;
+export default function UserPic({ name, sx, ...props }) {
+  return (
+    <Avatar
+      children={name.charAt(0)}
+      sx={{
+        bgcolor: stringToColor(name),
+        ...sx,
+      }}
+      {...props}
+    />
+  );
 }

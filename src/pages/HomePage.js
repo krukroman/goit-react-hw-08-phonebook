@@ -1,5 +1,6 @@
 import { CssBaseline, Grid, Box, Paper } from '@mui/material';
 import WelcomeMain from 'components/WelcomeMain';
+// import WelcomeLoginedUser from 'components/WelcomeLoginedUser';
 // import SignIn from 'components/Signin';
 // import SignUp from 'components/Signup';
 import Copyright from 'components/Copyright';
@@ -29,16 +30,22 @@ export default function HomePage() {
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
+          position="relative"
           sx={{
             px: 4,
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
             height: '100vh',
           }}
         >
           <WelcomeMain />
-          <Copyright />
+          <Copyright
+            sx={{
+              position: 'absolute',
+              bottom: 10,
+            }}
+          />
         </Box>
       </Grid>
     </Grid>

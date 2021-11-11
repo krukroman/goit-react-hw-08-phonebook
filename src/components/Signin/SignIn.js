@@ -38,14 +38,21 @@ export default function SignIn() {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Button
         variant="contained"
         startIcon={<ArrowBackOutlinedIcon />}
         sx={{
-          my: 2,
-          ml: 1,
-          alignSelf: 'flex-start',
+          m: 0,
+          position: 'absolute',
+          top: 10,
+          left: 32,
         }}
       >
         Home
@@ -97,6 +104,6 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Box>
-    </>
+    </Box>
   );
 }
