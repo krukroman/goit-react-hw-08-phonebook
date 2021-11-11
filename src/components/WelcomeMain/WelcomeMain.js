@@ -1,5 +1,5 @@
 import { Box, Link, Typography } from '@mui/material';
-export default function Welcome() {
+export default function WelcomeMain() {
   return (
     <Box
       sx={{

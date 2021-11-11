@@ -9,6 +9,7 @@ import {
   Link,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -38,7 +39,18 @@ export default function SignIn() {
 
   return (
     <>
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+      <Button
+        variant="contained"
+        startIcon={<ArrowBackOutlinedIcon />}
+        sx={{
+          my: 2,
+          ml: 1,
+          alignSelf: 'flex-start',
+        }}
+      >
+        Home
+      </Button>
+      <Avatar sx={{ m: 2, bgcolor: 'secondary.main' }}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
