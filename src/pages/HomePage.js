@@ -1,5 +1,5 @@
 import { CssBaseline, Grid, Box, Paper } from '@mui/material';
-import Welcome from 'components/Welcome';
+import WelcomeMain from 'components/WelcomeMain';
 // import SignIn from 'components/Signin';
 // import SignUp from 'components/Signup';
 import Copyright from 'components/Copyright';
@@ -37,7 +37,7 @@ export default function HomePage() {
             height: '100vh',
           }}
         >
-          <Welcome />
+          <WelcomeMain />
           <Copyright />
         </Box>
       </Grid>

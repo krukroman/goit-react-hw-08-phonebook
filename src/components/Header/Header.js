@@ -4,14 +4,7 @@ import UserInfo from 'components/Userinfo/Userinfo';
 
 export default function Header() {
   return (
-    <AppBar
-      color="primary"
-      position="static"
-      elevation={0}
-      sx={{
-        borderBottom: '1px solid #eee',
-      }}
-    >
+    <AppBar color="primary" position="fixed" elevation={5}>
       <Toolbar>
         <Grid container>
           <Grid
