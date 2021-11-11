@@ -12,9 +12,9 @@ const itemStyle = {
   },
 };
 
-export default function ContactsListItem() {
+export default function ContactsListItem({ enableEditMode }) {
   const onDeleteContact = () => {
-    console.log(`Delet contact`);
+    console.log(`Delete contact`);
   };
   return (
     <ListItem sx={itemStyle}>
@@ -73,7 +73,7 @@ export default function ContactsListItem() {
               minWidth: '100%',
             }}
           >
-            <IconButton>
+            <IconButton onClick={() => enableEditMode('', '')}>
               <Edit />
             </IconButton>
             <IconButton onClick={onDeleteContact}>

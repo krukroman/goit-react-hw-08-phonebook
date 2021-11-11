@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   CssBaseline,
   Container,
@@ -9,6 +10,8 @@ import {
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Header from 'components/Header';
 import ContactCardsList from 'components/ContactssList';
+import ModalWindow from 'components/ModalWindow';
+import ContactEditor from 'components/ContactEditor';
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -18,7 +21,7 @@ function ScrollTop(props) {
     threshold: 100,
   });
 
-  const handleClick = event => {
+  const onScrollTop = event => {
     const anchor = (event.target.ownerDocument || document).querySelector(
       '#back-to-top-anchor',
     );
@@ -34,7 +37,7 @@ function ScrollTop(props) {
   return (
     <Zoom in={trigger}>
       <Box
-        onClick={handleClick}
+        onClick={onScrollTop}
         role="presentation"
         sx={{ position: 'fixed', bottom: 8, right: 16 }}
       >
@@ -45,6 +48,30 @@ function ScrollTop(props) {
 }
 
 export default function ContactsPage() {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isEditing, setEditing] = useState(false);
+  const [nameToEdit, setNameToEdit] = useState('');
+  const [numberToEdit, setNumberToEdit] = useState('');
+
+  const enableEditMode = (name, number) => {
+    setModalOpen(true);
+    setEditing(true);
+    setNameToEdit(name);
+    setNumberToEdit(number);
+  };
+
+  const disableEditMode = () => {
+    if (!isEditing) return;
+    setEditing(false);
+    setNameToEdit('');
+    setNumberToEdit('');
+  };
+
+  const toggleModal = () => {
+    isModalOpen ? setModalOpen(false) : setModalOpen(true);
+    disableEditMode();
+  };
+
   return (
     <>
       <CssBaseline />
@@ -57,7 +84,10 @@ export default function ContactsPage() {
           minWidth: '100%',
         }}
       >
-        <ContactCardsList />
+        <ContactCardsList
+          toggleModal={toggleModal}
+          enableEditMode={enableEditMode}
+        />
       </Container>
 
       <ScrollTop>
@@ -65,6 +95,13 @@ export default function ContactsPage() {
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
+      <ModalWindow isOpen={isModalOpen} onCloseModal={toggleModal}>
+        <ContactEditor
+          onModalClose={toggleModal}
+          contactName={isEditing ? nameToEdit : ''}
+          contactNumber={isEditing ? numberToEdit : ''}
+        />
+      </ModalWindow>
     </>
   );
 }

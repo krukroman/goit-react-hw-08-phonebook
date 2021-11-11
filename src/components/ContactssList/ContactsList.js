@@ -11,7 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ContactsListItem from 'components/ContactsListItem';
 import Copyright from 'components/Copyright';
 
-export default function ContactsList() {
+export default function ContactsList({ toggleModal, enableEditMode }) {
   return (
     <>
       <Grid
@@ -57,6 +57,7 @@ export default function ContactsList() {
             }}
           >
             <IconButton
+              onClick={toggleModal}
               sx={{
                 display: { sm: 'none' },
                 color: '#fff',
@@ -70,6 +71,7 @@ export default function ContactsList() {
               <AddIcon />
             </IconButton>
             <Button
+              onClick={toggleModal}
               variant="contained"
               color="success"
               startIcon={<AddIcon />}
@@ -84,7 +86,7 @@ export default function ContactsList() {
       </Grid>
 
       <List>
-        <ContactsListItem />
+        <ContactsListItem enableEditMode={enableEditMode} />
       </List>
       <Copyright
         sx={{
