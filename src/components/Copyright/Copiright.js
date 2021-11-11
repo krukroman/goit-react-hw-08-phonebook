@@ -1,5 +1,6 @@
 import { Box, Typography, Link } from '@mui/material';
-export default function Copyright() {
+
+export default function Copyright(props = false) {
   return (
     <Box
       component="footer"
@@ -8,6 +9,7 @@ export default function Copyright() {
         px: 2,
         mt: 'auto',
       }}
+      {...props}
     >
       <Typography variant="body2" color="text.secondary" align="center">
         {'Copyright © '}

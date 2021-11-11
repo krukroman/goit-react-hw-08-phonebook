@@ -19,7 +19,6 @@ export default function Header() {
             xs={false}
             sm={4}
             md={3}
-            lg={3}
             sx={{
               display: { xs: 'none', sm: 'block' },
             }}
@@ -36,10 +35,10 @@ export default function Header() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={10} sm={7} md={7} lg={6}>
+          <Grid item xs={10} sm={7} md={6}>
             <SearchBar />
           </Grid>
-          <Grid item xs={2} sm={1} md={2} lg={3}>
+          <Grid item xs={2} sm={1} md={3}>
             <UserInfo />
           </Grid>
         </Grid>

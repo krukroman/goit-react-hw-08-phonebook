@@ -53,12 +53,13 @@ export default function UserInfo() {
             alignItems: 'center',
           }}
         >
-          <UserPic
-            name="User"
+          <Box
             sx={{
               mr: 1,
             }}
-          />
+          >
+            <UserPic name="User" />
+          </Box>
           <Box>
             <Typography variant="h6">Username</Typography>
             <Typography variant="body2">user@mail.com</Typography>

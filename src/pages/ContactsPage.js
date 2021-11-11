@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material';
 import Header from 'components/Header';
-import ContactCardsList from 'components/ContactCardsList';
+import ContactCardsList from 'components/ContactssList';
 
 export default function ContactsPage() {
   return (

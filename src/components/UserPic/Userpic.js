@@ -29,6 +29,6 @@ function stringAvatar(name) {
   };
 }
 
-export default function UserPic({ name, ...props }) {
-  return <Avatar {...stringAvatar(name)} {...props} />;
+export default function UserPic({ name }) {
+  return <Avatar {...stringAvatar(name)} />;
 }
