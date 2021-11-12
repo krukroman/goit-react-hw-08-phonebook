@@ -14,6 +14,7 @@ export default function HomePage({ children }) {
         sm={4}
         md={7}
         sx={{
+          display: { sx: 'none', sm: 'block' },
           backgroundImage: `url(${phoneBookImg})`,
           backgroundRepeat: 'no-repeat',
           backgroundColor: t =>
