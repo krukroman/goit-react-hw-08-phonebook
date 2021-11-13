@@ -1,22 +1,23 @@
-/* // todo: 1. create mockup of phonebook app with materalui
-      *  1.1 Create HomePage with login or register form on start
-      todo  1.2 create main ContactsPage with navbar, main content, footer
-      todo  1.2.1 create navbar with logo, filter, userinfo
-      todo  1.2.2 create main content with list of contacts
-      todo  1.2.3 create footer
-      todo  1.3 create addcontact page, with will replace main content
-      todo  1.3.1 form with name, phone, mail inputs. filds name and pnone are required
-      todo  1.3.2 contact obj: {name,phone, mail: mail && '', isFavorite: false}
-      todo  1.3.3 buttons: cancel and addcontact
- */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { store, persistor } from 'redux/store';
+
+const rednderPalce = document.getElementById('root');
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  rednderPalce,
 );
