@@ -1,7 +1,10 @@
+import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
+import authSelectors from 'redux/auth/auth-selectors';
 import UserPic from 'components/UserPic';
 export default function WelcomeLoginedUser() {
+  const userName = useSelector(authSelectors.getUserName);
   return (
     <Box
       sx={{
@@ -12,14 +15,14 @@ export default function WelcomeLoginedUser() {
       }}
     >
       <UserPic
-        name="User"
+        name={userName}
         sx={{
           width: 56,
           height: 56,
         }}
       />
       <Typography component="h5" variant="h4" sx={{ mt: 3 }} align="center">
-        Welcome User
+        {`Welcome, ${userName}`}
       </Typography>
       <Button
         component={RouterLink}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Grid,
@@ -9,6 +10,7 @@ import {
   Button,
   Link,
 } from '@mui/material';
+import authOperatins from 'redux/auth/auth-operations';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import HomeButton from 'components/HomeButton';
 
@@ -16,6 +18,7 @@ export default function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const onFormChange = e => {
     const { name, value } = e.target;
@@ -40,7 +43,10 @@ export default function SignUp() {
       email,
       password,
     };
-    console.log(newUser);
+    dispatch(authOperatins.signup(newUser));
+    setName('');
+    setEmail('');
+    setPassword('');
   };
   return (
     <Box

@@ -22,13 +22,15 @@ function stringToColor(string) {
 
 export default function UserPic({ name, sx, ...props }) {
   return (
-    <Avatar
-      children={name.charAt(0)}
-      sx={{
-        bgcolor: stringToColor(name),
-        ...sx,
-      }}
-      {...props}
-    />
+    name && (
+      <Avatar
+        children={name.charAt(0)}
+        sx={{
+          bgcolor: stringToColor(name),
+          ...sx,
+        }}
+        {...props}
+      />
+    )
   );
 }

@@ -12,21 +12,19 @@ const token = {
   },
 };
 
-async function authPostMethod(credentials, url) {
-  const { data } = await axios.post(`/users/${url}`, credentials);
-  token.set(data.token);
-  return data;
-}
-
 const signup = createAsyncThunk('auth/signup', async credentials => {
   try {
-    authPostMethod(credentials, 'signup');
+    const { data } = await axios.post(`/users/signup`, credentials);
+    token.set(data.token);
+    return data;
   } catch (error) {}
 });
 
 const signin = createAsyncThunk('auth/signin', async credentials => {
   try {
-    authPostMethod(credentials, 'login');
+    const { data } = await axios.post(`/users/login`, credentials);
+    token.set(data.token);
+    return data;
   } catch (error) {}
 });
 
@@ -54,3 +52,12 @@ const fetchCurrentUser = createAsyncThunk(
     } catch (error) {}
   },
 );
+
+const authOperatins = {
+  signup,
+  signin,
+  logout,
+  fetchCurrentUser,
+};
+
+export default authOperatins;

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   IconButton,
@@ -9,12 +10,18 @@ import {
   Typography,
   ListItemIcon,
 } from '@mui/material';
+import authSelectors from 'redux/auth/auth-selectors';
+import authOperatins from 'redux/auth/auth-operations';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import UserPic from 'components/UserPic';
 
 export default function UserInfo() {
   const [anchorEl, setAnchorEl] = useState(null);
+  const userName = useSelector(authSelectors.getUserName);
+  const userMail = useSelector(authSelectors.getUserEmail);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const hamdleMenu = e => {
     const { currentTarget } = e;
@@ -27,6 +34,8 @@ export default function UserInfo() {
 
   const onSignOut = () => {
     handleClose();
+    dispatch(authOperatins.logout());
+    navigate('/', { replace: true });
   };
 
   const renderMenu = () => {
@@ -59,11 +68,11 @@ export default function UserInfo() {
               mr: 1,
             }}
           >
-            <UserPic name="User" />
+            <UserPic name={userName} />
           </Box>
           <Box>
-            <Typography variant="h6">Username</Typography>
-            <Typography variant="body2">user@mail.com</Typography>
+            <Typography variant="h6">{userName}</Typography>
+            <Typography variant="body2">{userMail}</Typography>
           </Box>
         </Box>
         <Divider />
@@ -103,7 +112,7 @@ export default function UserInfo() {
           p: 0,
         }}
       >
-        <UserPic name="User" />
+        <UserPic name={userName} />
       </IconButton>
       {renderMenu()}
     </Box>
