@@ -9,19 +9,12 @@ export default function WelcomeMain() {
         alignItems: 'center',
       }}
     >
-      <Typography
-        component="h1"
-        variant="h2"
-        sx={{
-          mt: 8,
-        }}
-        align="center"
-      >
+      <Typography component="h1" variant="h2" align="center">
         Welcome to Phonebook app
       </Typography>
       <Typography
         sx={{
-          mt: 20,
+          mt: 3,
         }}
         variant="h5"
         align="center"

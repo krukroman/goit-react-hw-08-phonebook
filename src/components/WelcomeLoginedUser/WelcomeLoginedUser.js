@@ -14,7 +14,6 @@ export default function WelcomeLoginedUser() {
       <UserPic
         name="User"
         sx={{
-          mt: 3,
           width: 56,
           height: 56,
         }}
