@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, IconButton, Box } from '@mui/material';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import contactsOperations from 'redux/contacts/contacts-operaions';
+import contactsSelectors from 'redux/contacts/contacts-selectors';
+import isContactExist from 'functions/isContactExist';
 
 const namePattern =
   "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
@@ -22,6 +24,8 @@ export default function ContactEditor({
 }) {
   const [name, setName] = useState(contactName);
   const [number, setNumber] = useState(contactNumber);
+  const [error, setError] = useState(false);
+  const contacts = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
 
   const onChange = e => {
@@ -40,28 +44,40 @@ export default function ContactEditor({
 
   const onSubmit = e => {
     e.preventDefault();
-    if (isEditing) {
-      const editedContact = {
-        contactId,
-        name,
-        number,
-      };
-      dispatch(contactsOperations.updateContact(editedContact));
-      setName('');
-      setNumber('');
-      onModalClose();
-      return;
-    }
 
     const newContact = {
       name,
       number,
     };
-    dispatch(contactsOperations.addContact(newContact));
 
+    const editedContact = {
+      contactId,
+      name,
+      number,
+    };
+    if (isEditing) {
+      submitContact(editedContact);
+      return;
+    }
+
+    submitContact(newContact);
+  };
+
+  const submitContact = contact => {
+    if (isContactExist(contacts, name)) {
+      setError(true);
+      return;
+    }
+
+    dispatch(contactsOperations.addContact(contact));
+    resetForm();
+    onModalClose();
+  };
+
+  const resetForm = () => {
     setName('');
     setNumber('');
-    onModalClose();
+    setError(false);
   };
 
   return (
@@ -71,6 +87,8 @@ export default function ContactEditor({
       </IconButton>
       <Box component="form" onSubmit={onSubmit}>
         <TextField
+          error={error}
+          helperText={error && `Contact with name ${name} allready exist`}
           required
           type="text"
           margin="normal"

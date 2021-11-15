@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link as RouterLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {
   Box,
   IconButton,
@@ -11,7 +11,6 @@ import {
   ListItemIcon,
 } from '@mui/material';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import UserPic from 'components/UserPic';
 import authSelectors from 'redux/auth/auth-selectors';
 import authOperatins from 'redux/auth/auth-operations';
@@ -75,12 +74,6 @@ export default function UserInfo() {
           </Box>
         </Box>
         <Divider />
-        <MenuItem component={RouterLink} to="/">
-          <ListItemIcon>
-            <HomeOutlinedIcon />
-          </ListItemIcon>
-          Home page
-        </MenuItem>
         <MenuItem onClick={onSignOut}>
           <ListItemIcon>
             <LogoutOutlinedIcon />
