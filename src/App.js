@@ -10,7 +10,6 @@ import WelcomeMain from 'components/WelcomeMain';
 import WelcomeLoginedUser from 'components/WelcomeLoginedUser';
 import SignIn from 'components/Signin';
 import SignUp from 'components/Signup';
-import Signin from 'components/Signin';
 
 const theme = createTheme();
 
@@ -36,7 +35,7 @@ export default function App() {
         </Route>
         <Route path="/signin" exact>
           <HomePage>
-            <Signin />
+            <SignIn />
           </HomePage>
         </Route>
         <Route path="/signup" exact>
