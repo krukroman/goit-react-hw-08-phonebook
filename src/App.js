@@ -10,6 +10,7 @@ import WelcomeLoginedUser from 'components/WelcomeLoginedUser';
 import SignIn from 'components/Signin';
 import SignUp from 'components/Signup';
 import ContactsPage from 'pages/ContactsPage';
+import PrivateRoute from 'components/PrivateRoute';
 
 const theme = createTheme();
 
@@ -37,7 +38,7 @@ export default function App() {
             <Route path="signup" element={<SignUp />} />
             <Route path="welcome" element={<WelcomeLoginedUser />} />
           </Route>
-          <Route path="/contacts" element={<ContactsPage />} />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       )}

@@ -44,6 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchBar() {
   const searchQuery = useSelector(contactsSelectors.getFilter);
+  const contacts = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
 
   const onSearch = e => {
@@ -56,7 +57,7 @@ export default function SearchBar() {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Search…"
+        placeholder={`Contacts: ${contacts.length}`}
         inputProps={{ 'aria-label': 'search' }}
         onChange={onSearch}
         value={searchQuery}
