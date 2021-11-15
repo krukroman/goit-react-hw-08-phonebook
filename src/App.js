@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import authSelectors from 'redux/auth/auth-selectors';
 import authOperatins from 'redux/auth/auth-operations';
@@ -10,11 +10,12 @@ import WelcomeMain from 'components/WelcomeMain';
 import WelcomeLoginedUser from 'components/WelcomeLoginedUser';
 import SignIn from 'components/Signin';
 import SignUp from 'components/Signup';
+import PrivatRoute from 'components/PrivateRoute';
+import PublicRoute from 'components/PublicRoute';
 
 const theme = createTheme();
 
 export default function App() {
-  const loginStatus = useSelector(authSelectors.getLoginStatus);
   const fetchCurrentUserSatus = useSelector(
     authSelectors.getFetchingCurrentStatus,
   );
@@ -26,33 +27,35 @@ export default function App() {
   }, [dispatch]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Switch>
-        <Route path="/" exact>
-          <HomePage>
-            <WelcomeMain />
-          </HomePage>
-        </Route>
-        <Route path="/signin" exact>
-          <HomePage>
-            <SignIn />
-          </HomePage>
-        </Route>
-        <Route path="/signup" exact>
-          <HomePage>
-            <SignUp />
-          </HomePage>
-        </Route>
-        <Route path="/welcome" exact>
-          <HomePage>
-            <WelcomeLoginedUser />
-          </HomePage>
-        </Route>
-        <Route path="/contacts" exact>
-          <ContactsPage />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
-    </ThemeProvider>
+    !fetchCurrentUserSatus && (
+      <ThemeProvider theme={theme}>
+        <Switch>
+          <PublicRoute path="/" exact redirectTo="/welcome" restricted>
+            <HomePage>
+              <WelcomeMain />
+            </HomePage>
+          </PublicRoute>
+          <PublicRoute path="/signin" exact redirectTo="/welcome" restricted>
+            <HomePage>
+              <SignIn />
+            </HomePage>
+          </PublicRoute>
+          <PublicRoute path="/signup" exact redirectTo="/welcome" restricted>
+            <HomePage>
+              <SignUp />
+            </HomePage>
+          </PublicRoute>
+          <PrivatRoute path="/welcome" exact redirectTo="/">
+            <HomePage>
+              <WelcomeLoginedUser />
+            </HomePage>
+          </PrivatRoute>
+          <PrivatRoute path="/contacts" exact redirectTo="/">
+            <ContactsPage />
+          </PrivatRoute>
+          <Redirect to="/" />
+        </Switch>
+      </ThemeProvider>
+    )
   );
 }
