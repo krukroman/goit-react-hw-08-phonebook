@@ -27,37 +27,37 @@ export default function App() {
     dispatch(authOperatins.fetchCurrentUser());
   }, [dispatch]);
 
-  return fetchCurrentUserSatus ? (
-    <Spinner />
-  ) : (
-    <ThemeProvider theme={theme}>
-      <Switch>
-        <PublicRoute path="/" exact redirectTo="/contacts" restricted>
-          <HomePage>
-            <WelcomeMain />
-          </HomePage>
-        </PublicRoute>
-        <PublicRoute path="/signin" exact redirectTo="/contacts" restricted>
-          <HomePage>
+  return (
+    !fetchCurrentUserSatus && (
+      <ThemeProvider theme={theme}>
+        <Switch>
+          <PublicRoute path="/" exact redirectTo="/contacts" restricted>
+            <HomePage>
+              <WelcomeMain />
+            </HomePage>
+          </PublicRoute>
+          <PublicRoute path="/signin" exact redirectTo="/contacts" restricted>
+            <HomePage>
+              <Suspense fallback={<Spinner />}>
+                <SignIn />
+              </Suspense>
+            </HomePage>
+          </PublicRoute>
+          <PublicRoute path="/signup" exact redirectTo="/contacts" restricted>
+            <HomePage>
+              <Suspense fallback={<Spinner />}>
+                <SignUp />
+              </Suspense>
+            </HomePage>
+          </PublicRoute>
+          <PrivatRoute path="/contacts" exact redirectTo="/">
             <Suspense fallback={<Spinner />}>
-              <SignIn />
+              <ContactsPage />
             </Suspense>
-          </HomePage>
-        </PublicRoute>
-        <PublicRoute path="/signup" exact redirectTo="/contacts" restricted>
-          <HomePage>
-            <Suspense fallback={<Spinner />}>
-              <SignUp />
-            </Suspense>
-          </HomePage>
-        </PublicRoute>
-        <PrivatRoute path="/contacts" exact redirectTo="/">
-          <Suspense fallback={<Spinner />}>
-            <ContactsPage />
-          </Suspense>
-        </PrivatRoute>
-        <Redirect to="/" />
-      </Switch>
-    </ThemeProvider>
+          </PrivatRoute>
+          <Redirect to="/" />
+        </Switch>
+      </ThemeProvider>
+    )
   );
 }

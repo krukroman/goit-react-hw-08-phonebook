@@ -4,15 +4,16 @@ import './index.scss';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
 import { store, persistor } from 'redux/store';
+import App from './App';
+import Spinner from 'components/Spinner';
 
 const rednderPalce = document.getElementById('root');
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Spinner />} persistor={persistor}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
