@@ -20,7 +20,7 @@ function stringToColor(string) {
   return color;
 }
 
-export default function UserPic({ name, sx, ...props }) {
+export default function UserPic({ name = 'user', sx, ...props }) {
   return (
     name && (
       <Avatar

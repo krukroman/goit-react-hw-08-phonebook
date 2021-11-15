@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   CssBaseline,
   Container,
@@ -9,9 +10,11 @@ import {
 } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Header from 'components/Header';
-import ContactCardsList from 'components/ContactssList';
+import ContactsList from 'components/ContactssList';
 import ModalWindow from 'components/ModalWindow';
 import ContactEditor from 'components/ContactEditor';
+import authSelectors from 'redux/auth/auth-selectors';
+import contactsOperations from 'redux/contacts/contacts-operaions';
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -52,10 +55,18 @@ export default function ContactsPage() {
   const [isEditing, setEditing] = useState(false);
   const [nameToEdit, setNameToEdit] = useState('');
   const [numberToEdit, setNumberToEdit] = useState('');
+  const [id, setId] = useState('');
+  const LoginStatuss = useSelector(authSelectors.getLoginStatus);
+  const dispatch = useDispatch();
 
-  const enableEditMode = (name, number) => {
+  useEffect(() => {
+    LoginStatuss && dispatch(contactsOperations.fetchContacts());
+  }, [LoginStatuss, dispatch]);
+
+  const enableEditMode = (id, name, number) => {
     setModalOpen(true);
     setEditing(true);
+    setId(id);
     setNameToEdit(name);
     setNumberToEdit(number);
   };
@@ -63,6 +74,7 @@ export default function ContactsPage() {
   const disableEditMode = () => {
     if (!isEditing) return;
     setEditing(false);
+    setId('');
     setNameToEdit('');
     setNumberToEdit('');
   };
@@ -84,7 +96,7 @@ export default function ContactsPage() {
           minWidth: '100%',
         }}
       >
-        <ContactCardsList
+        <ContactsList
           toggleModal={toggleModal}
           enableEditMode={enableEditMode}
         />
@@ -98,6 +110,8 @@ export default function ContactsPage() {
       <ModalWindow isOpen={isModalOpen} onCloseModal={toggleModal}>
         <ContactEditor
           onModalClose={toggleModal}
+          isEditing={isEditing}
+          contactId={isEditing ? id : ''}
           contactName={isEditing ? nameToEdit : ''}
           contactNumber={isEditing ? numberToEdit : ''}
         />

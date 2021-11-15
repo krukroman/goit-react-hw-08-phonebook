@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { TextField, Button, IconButton, Box } from '@mui/material';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import contactsOperations from 'redux/contacts/contacts-operaions';
 
 const namePattern =
   "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
@@ -12,12 +14,15 @@ const phonePatternTitle =
   'Номер телефона должен состоять из цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +';
 
 export default function ContactEditor({
+  isEditing,
+  contactId,
   onModalClose,
   contactName,
   contactNumber,
 }) {
   const [name, setName] = useState(contactName);
   const [number, setNumber] = useState(contactNumber);
+  const dispatch = useDispatch();
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -35,7 +40,25 @@ export default function ContactEditor({
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(`Submit`);
+    if (isEditing) {
+      const editedContact = {
+        contactId,
+        name,
+        number,
+      };
+      dispatch(contactsOperations.updateContact(editedContact));
+      setName('');
+      setNumber('');
+      onModalClose();
+      return;
+    }
+
+    const newContact = {
+      name,
+      number,
+    };
+    dispatch(contactsOperations.addContact(newContact));
+
     setName('');
     setNumber('');
     onModalClose();

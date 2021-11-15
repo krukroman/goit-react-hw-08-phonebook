@@ -1,3 +1,5 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Grid,
   Box,
@@ -10,8 +12,11 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import ContactsListItem from 'components/ContactsListItem';
 import Copyright from 'components/Copyright';
+import contactsSelectors from 'redux/contacts/contacts-selectors';
 
 export default function ContactsList({ toggleModal, enableEditMode }) {
+  const filteredContacts = useSelector(contactsSelectors.getFilteredContacts);
+
   return (
     <>
       <Grid
@@ -25,7 +30,13 @@ export default function ContactsList({ toggleModal, enableEditMode }) {
         id="back-to-top-anchor"
       >
         <Grid item xs={8} sm={6} md={4}>
-          <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              height: '100%',
+            }}
+          >
             <Typography component="h3" variant="h6">
               Name
             </Typography>
@@ -41,7 +52,13 @@ export default function ContactsList({ toggleModal, enableEditMode }) {
             display: { xs: 'none', md: 'block' },
           }}
         >
-          <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              height: '100%',
+            }}
+          >
             <Typography component="h3" variant="h6">
               Phone number
             </Typography>
@@ -86,7 +103,18 @@ export default function ContactsList({ toggleModal, enableEditMode }) {
       </Grid>
 
       <List>
-        <ContactsListItem enableEditMode={enableEditMode} />
+        {filteredContacts.length > 0 &&
+          filteredContacts.map(({ id, name, number }) => {
+            return (
+              <ContactsListItem
+                key={id}
+                id={id}
+                name={name}
+                number={number}
+                enableEditMode={enableEditMode}
+              />
+            );
+          })}
       </List>
       <Copyright
         sx={{

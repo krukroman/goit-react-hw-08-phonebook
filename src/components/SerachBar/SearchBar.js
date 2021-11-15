@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { styled, alpha } from '@mui/material/styles';
 import { InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import contactsSelectors from 'redux/contacts/contacts-selectors';
+import contactsOperations from 'redux/contacts/contacts-operaions';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -41,11 +43,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBar() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchQuery = useSelector(contactsSelectors.getFilter);
+  const dispatch = useDispatch();
 
   const onSearch = e => {
     const { value } = e.target;
-    setSearchQuery(value);
+    dispatch(contactsOperations.changeFilter(value));
   };
   return (
     <Search>

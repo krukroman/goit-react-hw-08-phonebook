@@ -19,8 +19,6 @@ export default function App() {
     authSelectors.getFetchingCurrentStatus,
   );
 
-  console.log(loginStatus);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

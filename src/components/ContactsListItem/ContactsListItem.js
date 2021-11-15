@@ -1,7 +1,8 @@
+import { useDispatch } from 'react-redux';
 import { Grid, ListItem, Box, Typography, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-
 import UserPic from 'components/UserPic';
+import contactsOperations from 'redux/contacts/contacts-operaions';
 
 const itemStyle = {
   px: 2,
@@ -12,9 +13,10 @@ const itemStyle = {
   },
 };
 
-export default function ContactsListItem({ enableEditMode }) {
+export default function ContactsListItem({ id, name, number, enableEditMode }) {
+  const dispatch = useDispatch();
   const onDeleteContact = () => {
-    console.log(`Delete contact`);
+    dispatch(contactsOperations.deleteContact(id));
   };
   return (
     <ListItem sx={itemStyle}>
@@ -31,7 +33,7 @@ export default function ContactsListItem({ enableEditMode }) {
                 mr: 2,
               }}
             >
-              <UserPic name="Contact" />
+              <UserPic name={name} />
             </Box>
             <Typography
               component="p"
@@ -40,7 +42,7 @@ export default function ContactsListItem({ enableEditMode }) {
                 fontWeight: '500',
               }}
             >
-              Contact Name
+              {name}
             </Typography>
           </Box>
         </Grid>
@@ -61,7 +63,7 @@ export default function ContactsListItem({ enableEditMode }) {
               verticalAlign: 'middle',
             }}
           >
-            <Typography>123-123-4564</Typography>
+            <Typography>{number}</Typography>
           </Box>
         </Grid>
         <Grid item xs={4} sm={6} md={4}>
@@ -73,7 +75,7 @@ export default function ContactsListItem({ enableEditMode }) {
               minWidth: '100%',
             }}
           >
-            <IconButton onClick={() => enableEditMode('', '')}>
+            <IconButton onClick={() => enableEditMode(id, name, number)}>
               <Edit />
             </IconButton>
             <IconButton onClick={onDeleteContact}>
