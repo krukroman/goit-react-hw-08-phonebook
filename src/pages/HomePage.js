@@ -1,11 +1,11 @@
-import { Outlet } from 'react-router-dom';
 import { CssBaseline, Grid, Box, Paper } from '@mui/material';
+
 import Copyright from 'components/Copyright';
 import img from 'images/brittany-colette-GFLMi4c8XMg-unsplash.jpg';
 
 const phoneBookImg = img;
 
-export default function HomePage() {
+export default function HomePage({ children }) {
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <CssBaseline />
@@ -37,7 +37,7 @@ export default function HomePage() {
             height: '100vh',
           }}
         >
-          <Outlet />
+          {children}
           <Copyright
             sx={{
               position: 'absolute',

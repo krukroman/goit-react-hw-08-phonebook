@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import authSelectors from 'redux/auth/auth-selectors';
 import authOperatins from 'redux/auth/auth-operations';
 import HomePage from 'pages/HomePage.js';
+import ContactsPage from 'pages/ContactsPage';
 import WelcomeMain from 'components/WelcomeMain';
 import WelcomeLoginedUser from 'components/WelcomeLoginedUser';
 import SignIn from 'components/Signin';
 import SignUp from 'components/Signup';
-import ContactsPage from 'pages/ContactsPage';
-import PrivateRoute from 'components/PrivateRoute';
+import Signin from 'components/Signin';
 
 const theme = createTheme();
 
@@ -28,20 +28,32 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {fetchCurrentUserSatus ? (
-        <div> Loading... </div>
-      ) : (
-        <Routes>
-          <Route path="/" element={<HomePage />}>
-            <Route path="" element={<WelcomeMain />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="welcome" element={<WelcomeLoginedUser />} />
-          </Route>
-
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      )}
+      <Switch>
+        <Route path="/" exact>
+          <HomePage>
+            <WelcomeMain />
+          </HomePage>
+        </Route>
+        <Route path="/signin" exact>
+          <HomePage>
+            <Signin />
+          </HomePage>
+        </Route>
+        <Route path="/signup" exact>
+          <HomePage>
+            <SignUp />
+          </HomePage>
+        </Route>
+        <Route path="/welcome" exact>
+          <HomePage>
+            <WelcomeLoginedUser />
+          </HomePage>
+        </Route>
+        <Route path="/contacts" exact>
+          <ContactsPage />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
     </ThemeProvider>
   );
 }

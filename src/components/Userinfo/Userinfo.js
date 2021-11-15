@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import {
   Box,
   IconButton,
@@ -21,7 +21,6 @@ export default function UserInfo() {
   const userName = useSelector(authSelectors.getUserName);
   const userMail = useSelector(authSelectors.getUserEmail);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const hamdleMenu = e => {
     const { currentTarget } = e;
@@ -35,7 +34,7 @@ export default function UserInfo() {
   const onSignOut = () => {
     handleClose();
     dispatch(authOperatins.logout());
-    navigate('/', { replace: true });
+    <Redirect to="/" />;
   };
 
   const renderMenu = () => {
