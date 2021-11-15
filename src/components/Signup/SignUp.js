@@ -10,9 +10,9 @@ import {
   Button,
   Link,
 } from '@mui/material';
-import authOperatins from 'redux/auth/auth-operations';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import HomeButton from 'components/HomeButton';
+import authOperatins from 'redux/auth/auth-operations';
 
 export default function SignUp() {
   const [name, setName] = useState('');

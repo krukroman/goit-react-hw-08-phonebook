@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
-import authSelectors from 'redux/auth/auth-selectors';
 import UserPic from 'components/UserPic';
+import authSelectors from 'redux/auth/auth-selectors';
+
 export default function WelcomeLoginedUser() {
   const userName = useSelector(authSelectors.getUserName);
   return (

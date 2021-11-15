@@ -10,11 +10,11 @@ import {
   Typography,
   ListItemIcon,
 } from '@mui/material';
-import authSelectors from 'redux/auth/auth-selectors';
-import authOperatins from 'redux/auth/auth-operations';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import UserPic from 'components/UserPic';
+import authSelectors from 'redux/auth/auth-selectors';
+import authOperatins from 'redux/auth/auth-operations';
 
 export default function UserInfo() {
   const [anchorEl, setAnchorEl] = useState(null);
