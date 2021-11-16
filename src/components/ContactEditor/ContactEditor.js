@@ -25,8 +25,15 @@ export default function ContactEditor({
   const [name, setName] = useState(contactName);
   const [number, setNumber] = useState(contactNumber);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const contacts = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
+  const isNameValid = !isContactExist.isNameExist(contacts, name);
+  const isNubmerValid = !isContactExist.isNumberExist(contacts, number);
+
+  const isEditedContactValid =
+    (name === contactName || isNameValid) &&
+    (number === contactNumber || isNubmerValid);
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -45,40 +52,55 @@ export default function ContactEditor({
   const onSubmit = e => {
     e.preventDefault();
 
+    if (isEditing) {
+      submitEditedContacts();
+      return;
+    }
+
+    submitNewContact();
+  };
+
+  const submitNewContact = () => {
     const newContact = {
       name,
       number,
     };
+    if (!isNameValid) {
+      setError(true);
+      setErrorMessage('This name or phone number is allready exist');
+      return;
+    }
 
+    dispatch(contactsOperations.addContact(newContact));
+    resetForm();
+    onModalClose();
+  };
+
+  const submitEditedContacts = () => {
     const editedContact = {
       contactId,
       name,
       number,
     };
-    if (isEditing) {
-      submitContact(editedContact);
+    if (isEditedContactValid) {
+      dispatch(contactsOperations.updateContact(editedContact));
+      resetForm();
+      onModalClose();
       return;
     }
-
-    submitContact(newContact);
-  };
-
-  const submitContact = contact => {
-    if (isContactExist(contacts, name)) {
-      setError(true);
-      return;
-    }
-
-    dispatch(contactsOperations.addContact(contact));
-    resetForm();
-    onModalClose();
+    setError(true);
+    setErrorMessage('This name or phone number is allready exist');
+    return;
   };
 
   const resetForm = () => {
     setName('');
     setNumber('');
     setError(false);
+    setErrorMessage('');
   };
+
+  console.log(isEditedContactValid);
 
   return (
     <>
@@ -88,7 +110,7 @@ export default function ContactEditor({
       <Box component="form" onSubmit={onSubmit}>
         <TextField
           error={error}
-          helperText={error && `Contact with name ${name} allready exist`}
+          helperText={error && errorMessage}
           required
           type="text"
           margin="normal"
