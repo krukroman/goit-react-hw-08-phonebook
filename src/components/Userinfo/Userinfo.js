@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import {
   Box,
   IconButton,
@@ -32,7 +32,7 @@ export default function UserInfo() {
   const onSignOut = () => {
     handleClose();
     dispatch(authOperations.logout());
-    <Redirect to="/" />;
+    <Navigate to="/" />;
   };
 
   const renderMenu = () => {

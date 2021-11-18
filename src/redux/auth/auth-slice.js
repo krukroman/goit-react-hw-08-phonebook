@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import authOperatins from './auth-operations';
+import LOADING_STATUS from 'components/loading-status';
 
 const initialState = {
   user: { name: null, email: null },
   token: null,
   serverError: null,
   isLoggedIn: false,
-  isFetchingCurrentUser: false,
+  isFetchingCurrentUser: LOADING_STATUS.IDLE,
 };
 
 const authSlice = createSlice({
@@ -16,7 +17,7 @@ const authSlice = createSlice({
     [authOperatins.fetchCurrentUser.fulfilled](state, { payload }) {
       state.user = payload;
       state.isLoggedIn = true;
-      state.isFetchingCurrentUser = false;
+      state.isFetchingCurrentUser = LOADING_STATUS.SUCCESS;
     },
     [authOperatins.signup.fulfilled](state, { payload }) {
       state.user = payload.user;
@@ -34,8 +35,11 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     [authOperatins.fetchCurrentUser.rejected](state, { payload }) {
-      state.isFetchingCurrentUser = false;
+      state.isFetchingCurrentUser = LOADING_STATUS.REJECTED;
       if (payload) {
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
         state.serverError = payload;
       }
     },
@@ -51,7 +55,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     [authOperatins.fetchCurrentUser.pending](state) {
-      state.isFetchingCurrentUser = true;
+      state.isFetchingCurrentUser = LOADING_STATUS.PENDING;
       state.serverError = null;
     },
     [authOperatins.signup.pending](state) {
