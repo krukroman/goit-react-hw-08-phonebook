@@ -8,12 +8,15 @@ const getLoginStatus = state => state.auth.isLoggedIn;
 
 const getFetchingCurrentStatus = state => state.auth.isFetchingCurrentUser;
 
+const getServerError = state => state.auth.serverError;
+
 const authSelectors = {
   getUserName,
   getUserEmail,
   getToken,
   getLoginStatus,
   getFetchingCurrentStatus,
+  getServerError,
 };
 
 export default authSelectors;
