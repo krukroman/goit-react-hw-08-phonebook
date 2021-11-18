@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import {
   CssBaseline,
   Container,
@@ -9,12 +10,17 @@ import {
   Zoom,
 } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
 import Header from 'components/Header';
 import ContactsList from 'components/ContactssList';
 import ModalWindow from 'components/ModalWindow';
 import ContactEditor from 'components/ContactEditor';
+
 import authSelectors from 'redux/auth/auth-selectors';
 import contactsOperations from 'redux/contacts/contacts-operaions';
+import contactsSelectors from 'redux/contacts/contacts-selectors';
+
+import LOADING_STATUS from 'components/loading-status';
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -56,15 +62,32 @@ export default function ContactsPage() {
   const [nameToEdit, setNameToEdit] = useState('');
   const [numberToEdit, setNumberToEdit] = useState('');
   const [id, setId] = useState('');
-  const LoginStatuss = useSelector(authSelectors.getLoginStatus);
+
+  const LoginStatus = useSelector(authSelectors.getLoginStatus);
+  const loadingStatus = useSelector(contactsSelectors.getLoadingStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    LoginStatuss && dispatch(contactsOperations.fetchContacts());
-  }, [LoginStatuss, dispatch]);
+    LoginStatus && dispatch(contactsOperations.fetchContacts());
+  }, [LoginStatus, dispatch]);
+
+  const resetLoadingStatus = () => {
+    loadingStatus !== LOADING_STATUS.IDLE &&
+      dispatch(contactsOperations.resetLoadingStatus());
+  };
+
+  const openModal = () => {
+    resetLoadingStatus();
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    disableEditMode();
+    setModalOpen(false);
+  };
 
   const enableEditMode = (id, name, number) => {
-    setModalOpen(true);
+    openModal();
     setEditing(true);
     setId(id);
     setNameToEdit(name);
@@ -79,11 +102,6 @@ export default function ContactsPage() {
     setNumberToEdit('');
   };
 
-  const toggleModal = () => {
-    isModalOpen ? setModalOpen(false) : setModalOpen(true);
-    disableEditMode();
-  };
-
   return (
     <>
       <CssBaseline />
@@ -96,10 +114,7 @@ export default function ContactsPage() {
           minWidth: '100%',
         }}
       >
-        <ContactsList
-          toggleModal={toggleModal}
-          enableEditMode={enableEditMode}
-        />
+        <ContactsList toggleModal={openModal} enableEditMode={enableEditMode} />
       </Container>
 
       <ScrollTop>
@@ -107,9 +122,9 @@ export default function ContactsPage() {
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
-      <ModalWindow isOpen={isModalOpen} onCloseModal={toggleModal}>
+      <ModalWindow isOpen={isModalOpen} onCloseModal={closeModal}>
         <ContactEditor
-          onModalClose={toggleModal}
+          onCloseModal={closeModal}
           isEditing={isEditing}
           contactId={isEditing ? id : ''}
           contactName={isEditing ? nameToEdit : ''}

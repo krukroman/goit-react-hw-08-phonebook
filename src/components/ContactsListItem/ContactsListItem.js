@@ -75,10 +75,13 @@ export default function ContactsListItem({ id, name, number, enableEditMode }) {
               minWidth: '100%',
             }}
           >
-            <IconButton onClick={() => enableEditMode(id, name, number)}>
+            <IconButton
+              aria-label="edit contact"
+              onClick={() => enableEditMode(id, name, number)}
+            >
               <Edit />
             </IconButton>
-            <IconButton onClick={onDeleteContact}>
+            <IconButton aria-label="delete-contact" onClick={onDeleteContact}>
               <Delete />
             </IconButton>
           </Box>

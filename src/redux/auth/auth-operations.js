@@ -12,44 +12,61 @@ const token = {
   },
 };
 
-const signup = createAsyncThunk('auth/signup', async credentials => {
-  try {
-    const { data } = await axios.post(`/users/signup`, credentials);
-    token.set(data.token);
-    return data;
-  } catch (error) {}
-});
+const signup = createAsyncThunk(
+  'auth/signup',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`/users/signup`, credentials);
+      token.set(data.token);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
-const signin = createAsyncThunk('auth/signin', async credentials => {
-  try {
-    const { data } = await axios.post(`/users/login`, credentials);
-    token.set(data.token);
-    return data;
-  } catch (error) {}
-});
+const signin = createAsyncThunk(
+  'auth/signin',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`/users/login`, credentials);
+      token.set(data.token);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
-const logout = createAsyncThunk('auth/logout', async () => {
-  try {
-    await axios.post('/users/logout');
-    token.reset();
-  } catch (error) {}
-});
+const logout = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.post('/users/logout');
+      token.reset();
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
 const fetchCurrentUser = createAsyncThunk(
   'auth/refresh',
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
+  async (_, { getState, rejectWithValue }) => {
+    const state = getState();
     const persistedToken = state.auth.token;
 
     if (persistedToken === null) {
-      return thunkAPI.rejectWithValue();
+      return rejectWithValue();
     }
 
     token.set(persistedToken);
     try {
       const { data } = await axios.get('/users/current');
       return data;
-    } catch (error) {}
+    } catch (error) {
+      return rejectWithValue(error);
+    }
   },
 );
 

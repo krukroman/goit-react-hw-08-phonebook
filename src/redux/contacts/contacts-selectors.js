@@ -1,6 +1,12 @@
 import { createSelector } from 'reselect';
+
 const getContacts = state => state.contacts.items;
+
 const getFilter = state => state.contacts.filter;
+
+const getLoadingStatus = state => state.contacts.loading;
+
+const getError = state => state.contacts.serverError;
 
 const getFilteredContacts = createSelector(
   [getContacts, getFilter],
@@ -17,6 +23,8 @@ const getFilteredContacts = createSelector(
 const contactsSelectors = {
   getContacts,
   getFilter,
+  getLoadingStatus,
+  getError,
   getFilteredContacts,
 };
 

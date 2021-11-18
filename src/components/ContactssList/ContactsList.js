@@ -74,6 +74,7 @@ export default function ContactsList({ toggleModal, enableEditMode }) {
             }}
           >
             <IconButton
+              aria-label="add contact"
               onClick={toggleModal}
               sx={{
                 display: { sm: 'none' },
@@ -88,6 +89,7 @@ export default function ContactsList({ toggleModal, enableEditMode }) {
               <AddIcon />
             </IconButton>
             <Button
+              aria-label="add contact"
               onClick={toggleModal}
               variant="contained"
               color="success"

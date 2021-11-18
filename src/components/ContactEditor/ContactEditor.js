@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, IconButton, Box } from '@mui/material';
+
+import { TextField, Button, IconButton, Box, Alert } from '@mui/material';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+
 import contactsOperations from 'redux/contacts/contacts-operaions';
 import contactsSelectors from 'redux/contacts/contacts-selectors';
+
 import isContactExist from 'functions/isContactExist';
+import LOADING_STATUS from 'components/loading-status';
 
 const namePattern =
   "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
@@ -18,22 +23,31 @@ const phonePatternTitle =
 export default function ContactEditor({
   isEditing,
   contactId,
-  onModalClose,
+  onCloseModal,
   contactName,
   contactNumber,
 }) {
   const [name, setName] = useState(contactName);
   const [number, setNumber] = useState(contactNumber);
-  const [error, setError] = useState(false);
+  const [clientError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
   const contacts = useSelector(contactsSelectors.getContacts);
+  const loadingStatus = useSelector(contactsSelectors.getLoadingStatus);
+
   const dispatch = useDispatch();
+
   const isNameValid = !isContactExist.isNameExist(contacts, name);
   const isNubmerValid = !isContactExist.isNumberExist(contacts, number);
 
   const isEditedContactValid =
     (name === contactName || isNameValid) &&
     (number === contactNumber || isNubmerValid);
+
+  useEffect(() => {
+    !clientError && loadingStatus === LOADING_STATUS.SUCCESS && onCloseModal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clientError, loadingStatus]);
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -49,7 +63,7 @@ export default function ContactEditor({
     }
   };
 
-  const onSubmit = e => {
+  const onFormSubmit = e => {
     e.preventDefault();
 
     if (isEditing) {
@@ -65,6 +79,7 @@ export default function ContactEditor({
       name,
       number,
     };
+
     if (!isNameValid) {
       setError(true);
       setErrorMessage('This name or phone number is allready exist');
@@ -73,7 +88,6 @@ export default function ContactEditor({
 
     dispatch(contactsOperations.addContact(newContact));
     resetForm();
-    onModalClose();
   };
 
   const submitEditedContacts = () => {
@@ -85,11 +99,12 @@ export default function ContactEditor({
     if (isEditedContactValid) {
       dispatch(contactsOperations.updateContact(editedContact));
       resetForm();
-      onModalClose();
       return;
     }
+
     setError(true);
     setErrorMessage('This name or phone number is allready exist');
+
     return;
   };
 
@@ -100,17 +115,15 @@ export default function ContactEditor({
     setErrorMessage('');
   };
 
-  console.log(isEditedContactValid);
-
   return (
     <>
-      <IconButton onClick={onModalClose}>
+      <IconButton onClick={onCloseModal}>
         <ArrowBackOutlinedIcon />
       </IconButton>
-      <Box component="form" onSubmit={onSubmit}>
+      <Box component="form" onSubmit={onFormSubmit}>
         <TextField
-          error={error}
-          helperText={error && errorMessage}
+          error={clientError}
+          helperText={clientError && errorMessage}
           required
           type="text"
           margin="normal"
@@ -125,7 +138,6 @@ export default function ContactEditor({
             title: namePatternTitle,
           }}
         />
-
         <TextField
           required
           type="tel"
@@ -143,13 +155,21 @@ export default function ContactEditor({
         />
         <Button
           type="submit"
+          color="primary"
+          variant="contained"
+          startIcon={loadingStatus !== LOADING_STATUS.PENDING && <SaveIcon />}
           fullWidth
           sx={{
             my: 1,
           }}
         >
-          Save
+          {loadingStatus === LOADING_STATUS.PENDING ? '...loading' : 'save'}
         </Button>
+        {loadingStatus === LOADING_STATUS.REJECTED && (
+          <Alert severity="error">
+            Something goes wrong, try again please.
+          </Alert>
+        )}
       </Box>
     </>
   );

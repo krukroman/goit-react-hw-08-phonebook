@@ -50,7 +50,7 @@ export default function App() {
               </Suspense>
             </HomePage>
           </PublicRoute>
-          <PrivatRoute path="/contacts" exact redirectTo="/">
+          <PrivatRoute path="/contacts" exact redirectTo="/signin">
             <Suspense fallback={<Spinner />}>
               <ContactsPage />
             </Suspense>
