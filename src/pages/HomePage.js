@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { CssBaseline, Grid, Box, Paper } from '@mui/material';
 
 import Copyright from 'components/Copyright';
@@ -49,3 +50,7 @@ export default function HomePage({ children }) {
     </Grid>
   );
 }
+
+HomePage.propTypes = {
+  children: PropTypes.shape({}).isRequired,
+};
