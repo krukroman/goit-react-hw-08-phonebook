@@ -70,11 +70,11 @@ const fetchCurrentUser = createAsyncThunk(
   },
 );
 
-const authOperatins = {
+const authOperations = {
   signup,
   signin,
   logout,
   fetchCurrentUser,
 };
 
-export default authOperatins;
+export default authOperations;

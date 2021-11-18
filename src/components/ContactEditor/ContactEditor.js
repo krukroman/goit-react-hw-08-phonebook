@@ -5,8 +5,7 @@ import { TextField, Button, IconButton, Box, Alert } from '@mui/material';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 
-import contactsOperations from 'redux/contacts/contacts-operaions';
-import contactsSelectors from 'redux/contacts/contacts-selectors';
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
 import isContactExist from 'functions/isContactExist';
 import LOADING_STATUS from 'components/loading-status';

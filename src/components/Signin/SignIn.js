@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import HomeButton from 'components/HomeButton';
-import authOperatins from 'redux/auth/auth-operations';
-import authSelectors from 'redux/auth/auth-selectors';
+
+import { authOperations, authSelectors } from 'redux/auth';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -41,7 +41,7 @@ export default function SignIn() {
       email,
       password,
     };
-    dispatch(authOperatins.signin(user));
+    dispatch(authOperations.signin(user));
     setEmail('');
     setPassword('');
   };

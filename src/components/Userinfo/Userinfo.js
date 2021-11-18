@@ -12,8 +12,7 @@ import {
 } from '@mui/material';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import UserPic from 'components/UserPic';
-import authSelectors from 'redux/auth/auth-selectors';
-import authOperatins from 'redux/auth/auth-operations';
+import { authOperations, authSelectors } from 'redux/auth';
 
 export default function UserInfo() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,7 +31,7 @@ export default function UserInfo() {
 
   const onSignOut = () => {
     handleClose();
-    dispatch(authOperatins.logout());
+    dispatch(authOperations.logout());
     <Redirect to="/" />;
   };
 

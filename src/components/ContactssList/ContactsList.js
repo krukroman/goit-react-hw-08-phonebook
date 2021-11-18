@@ -12,7 +12,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import ContactsListItem from 'components/ContactsListItem';
 import Copyright from 'components/Copyright';
-import contactsSelectors from 'redux/contacts/contacts-selectors';
+import { contactsSelectors } from 'redux/contacts';
 
 export default function ContactsList({ toggleModal, enableEditMode }) {
   const filteredContacts = useSelector(contactsSelectors.getFilteredContacts);

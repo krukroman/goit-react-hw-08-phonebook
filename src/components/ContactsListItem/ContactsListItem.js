@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { Grid, ListItem, Box, Typography, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import UserPic from 'components/UserPic';
-import contactsOperations from 'redux/contacts/contacts-operaions';
+import { contactsOperations } from 'redux/contacts';
 
 const itemStyle = {
   px: 2,

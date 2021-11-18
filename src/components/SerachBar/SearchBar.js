@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { styled, alpha } from '@mui/material/styles';
 import { InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import contactsSelectors from 'redux/contacts/contacts-selectors';
-import contactsOperations from 'redux/contacts/contacts-operaions';
+
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
