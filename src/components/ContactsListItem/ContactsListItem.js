@@ -23,29 +23,34 @@ export default function ContactsListItem({ id, name, number, enableEditMode }) {
   return (
     <ListItem sx={itemStyle}>
       <Grid container>
-        <Grid item xs={8} sm={6} md={4}>
+        <Grid item xs={8} sm={8} md={4}>
           <Box
             sx={{
               display: 'fkex',
               alignItems: 'center',
+              height: '100%',
             }}
           >
             <Box
               sx={{
+                display: { xs: 'none', sm: 'block' },
                 mr: 2,
               }}
             >
               <UserPic name={name} />
             </Box>
-            <Typography
-              component="p"
-              variant="body1"
-              sx={{
-                fontWeight: '500',
-              }}
-            >
-              {name}
-            </Typography>
+            <Box>
+              <Typography
+                component="p"
+                variant="body1"
+                sx={{
+                  fontWeight: '700',
+                }}
+              >
+                {name}
+              </Typography>
+              <Typography sx={{ display: { md: 'none' } }}>{number}</Typography>
+            </Box>
           </Box>
         </Grid>
         <Grid
@@ -54,7 +59,7 @@ export default function ContactsListItem({ id, name, number, enableEditMode }) {
           sm={false}
           md={4}
           sx={{
-            display: { xs: 'none', sm: 'none', md: 'flex' },
+            display: { xs: 'none', md: 'block' },
             alignItems: 'center',
           }}
         >
@@ -62,18 +67,19 @@ export default function ContactsListItem({ id, name, number, enableEditMode }) {
             sx={{
               display: 'fkex',
               alignItems: 'center',
-              verticalAlign: 'middle',
+              height: '100%',
             }}
           >
             <Typography>{number}</Typography>
           </Box>
         </Grid>
-        <Grid item xs={4} sm={6} md={4}>
+        <Grid item xs={4} sm={4} md={4}>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'flex-end',
+              height: '100%',
               minWidth: '100%',
             }}
           >
