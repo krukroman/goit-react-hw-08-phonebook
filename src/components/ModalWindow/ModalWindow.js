@@ -1,5 +1,6 @@
 import { Fade, Modal, Backdrop } from '@mui/material';
 import { Box } from '@mui/system';
+import PropTypes from 'prop-types';
 
 const style = {
   p: 2,
@@ -35,3 +36,9 @@ export default function ModalWindow({ children, isOpen, onCloseModal }) {
     </Modal>
   );
 }
+
+ModalWindow.propTypes = {
+  children: PropTypes.shape({}).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onCloseModal: PropTypes.func.isRequired,
+};

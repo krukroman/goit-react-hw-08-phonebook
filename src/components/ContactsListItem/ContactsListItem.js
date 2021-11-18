@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Grid, ListItem, Box, Typography, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import UserPic from 'components/UserPic';
@@ -15,6 +16,7 @@ const itemStyle = {
 
 export default function ContactsListItem({ id, name, number, enableEditMode }) {
   const dispatch = useDispatch();
+
   const onDeleteContact = () => {
     dispatch(contactsOperations.deleteContact(id));
   };
@@ -90,3 +92,10 @@ export default function ContactsListItem({ id, name, number, enableEditMode }) {
     </ListItem>
   );
 }
+
+ContactsListItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+  enableEditMode: PropTypes.func.isRequired,
+};

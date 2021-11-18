@@ -113,7 +113,7 @@ export default function ContactsPage() {
           minWidth: '100%',
         }}
       >
-        <ContactsList toggleModal={openModal} enableEditMode={enableEditMode} />
+        <ContactsList openModal={openModal} enableEditMode={enableEditMode} />
       </Container>
 
       <ScrollTop>

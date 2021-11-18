@@ -1,5 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Typography, Link } from '@mui/material';
+import PropTypes from 'prop-types';
 
 export default function Copyright(props = false) {
   return (
@@ -15,3 +16,7 @@ export default function Copyright(props = false) {
     </Box>
   );
 }
+
+Copyright.propTypes = {
+  props: PropTypes.shape({}),
+};

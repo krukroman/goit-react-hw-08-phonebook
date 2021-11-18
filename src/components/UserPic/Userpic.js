@@ -1,4 +1,5 @@
 import { Avatar } from '@mui/material';
+import PropTypes from 'prop-types';
 
 function stringToColor(string) {
   let hash = 0;
@@ -34,3 +35,9 @@ export default function UserPic({ name = 'user', sx, ...props }) {
     )
   );
 }
+
+UserPic.propTypes = {
+  name: PropTypes.string.isRequired,
+  sx: PropTypes.shape({}),
+  props: PropTypes.shape({}),
+};

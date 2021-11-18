@@ -1,5 +1,5 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   Grid,
   Box,
@@ -14,7 +14,7 @@ import ContactsListItem from 'components/ContactsListItem';
 import Copyright from 'components/Copyright';
 import { contactsSelectors } from 'redux/contacts';
 
-export default function ContactsList({ toggleModal, enableEditMode }) {
+export default function ContactsList({ openModal, enableEditMode }) {
   const filteredContacts = useSelector(contactsSelectors.getFilteredContacts);
 
   return (
@@ -75,7 +75,7 @@ export default function ContactsList({ toggleModal, enableEditMode }) {
           >
             <IconButton
               aria-label="add contact"
-              onClick={toggleModal}
+              onClick={openModal}
               sx={{
                 display: { sm: 'none' },
                 color: '#fff',
@@ -90,7 +90,7 @@ export default function ContactsList({ toggleModal, enableEditMode }) {
             </IconButton>
             <Button
               aria-label="add contact"
-              onClick={toggleModal}
+              onClick={openModal}
               variant="contained"
               color="success"
               startIcon={<AddIcon />}
@@ -132,3 +132,8 @@ export default function ContactsList({ toggleModal, enableEditMode }) {
     </>
   );
 }
+
+ContactsList.propTypes = {
+  openModal: PropTypes.func.isRequired,
+  enableEditMode: PropTypes.func.isRequired,
+};

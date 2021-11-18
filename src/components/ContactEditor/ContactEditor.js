@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { TextField, Button, IconButton, Box, Alert } from '@mui/material';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
@@ -173,3 +174,11 @@ export default function ContactEditor({
     </>
   );
 }
+
+ContactEditor.propTypes = {
+  isEditing: PropTypes.bool.isRequired,
+  contactId: PropTypes.string,
+  onCloseModal: PropTypes.func.isRequired,
+  contactName: PropTypes.string.isRequired,
+  contactNumber: PropTypes.string.isRequired,
+};
