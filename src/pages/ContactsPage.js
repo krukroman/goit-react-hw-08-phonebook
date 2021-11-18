@@ -16,9 +16,8 @@ import ContactsList from 'components/ContactssList';
 import ModalWindow from 'components/ModalWindow';
 import ContactEditor from 'components/ContactEditor';
 
-import authSelectors from 'redux/auth/auth-selectors';
-import contactsOperations from 'redux/contacts/contacts-operaions';
-import contactsSelectors from 'redux/contacts/contacts-selectors';
+import { authSelectors } from 'redux/auth';
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
 import LOADING_STATUS from 'components/loading-status';
 
