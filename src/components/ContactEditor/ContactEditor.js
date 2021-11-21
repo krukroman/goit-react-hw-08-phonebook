@@ -99,11 +99,10 @@ export default function ContactEditor({
   };
 
   const resetForm = () => {
-    setContact(prev => ({
-      ...prev,
+    setContact({
       name: '',
       number: '',
-    }));
+    });
     setError(false);
     setErrorMessage('');
   };
