@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { TextField, Button, IconButton, Box, Alert } from '@mui/material';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import SaveIcon from '@mui/icons-material/Save';
+import CheckIcon from '@mui/icons-material/Check';
 
 import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
@@ -27,8 +28,10 @@ export default function ContactEditor({
   contactName,
   contactNumber,
 }) {
-  const [name, setName] = useState(contactName);
-  const [number, setNumber] = useState(contactNumber);
+  const [contact, setContact] = useState({
+    name: contactName,
+    number: contactNumber,
+  });
   const [clientError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -37,30 +40,23 @@ export default function ContactEditor({
 
   const dispatch = useDispatch();
 
-  const isNameValid = !isContactExist.isNameExist(contacts, name);
-  const isNubmerValid = !isContactExist.isNumberExist(contacts, number);
+  const isNameValid = !isContactExist.isNameExist(contacts, contact.name);
+  const isNubmerValid = !isContactExist.isNumberExist(contacts, contact.number);
 
   const isEditedContactValid =
-    (name === contactName || isNameValid) &&
-    (number === contactNumber || isNubmerValid);
+    (contact.name === contactName || isNameValid) &&
+    (contact.number === contactNumber || isNubmerValid);
 
   useEffect(() => {
     !clientError && loadingStatus === LOADING_STATUS.SUCCESS && onCloseModal();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientError, loadingStatus]);
+  }, [clientError, loadingStatus, onCloseModal]);
 
   const onChange = e => {
     const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      default:
-        return;
-    }
+    setContact(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const onFormSubmit = e => {
@@ -75,26 +71,20 @@ export default function ContactEditor({
   };
 
   const submitNewContact = () => {
-    const newContact = {
-      name,
-      number,
-    };
-
     if (!isNameValid) {
       setError(true);
       setErrorMessage('This name or phone number is allready exist');
       return;
     }
 
-    dispatch(contactsOperations.addContact(newContact));
+    dispatch(contactsOperations.addContact(contact));
     resetForm();
   };
 
   const submitEditedContacts = () => {
     const editedContact = {
       contactId,
-      name,
-      number,
+      ...contact,
     };
     if (isEditedContactValid) {
       dispatch(contactsOperations.updateContact(editedContact));
@@ -109,8 +99,11 @@ export default function ContactEditor({
   };
 
   const resetForm = () => {
-    setName('');
-    setNumber('');
+    setContact(prev => ({
+      ...prev,
+      name: '',
+      number: '',
+    }));
     setError(false);
     setErrorMessage('');
   };
@@ -131,7 +124,7 @@ export default function ContactEditor({
           id="name"
           label="Name"
           fullWidth
-          value={name}
+          value={contact.name}
           onChange={onChange}
           inputProps={{
             pattern: namePattern,
@@ -146,7 +139,7 @@ export default function ContactEditor({
           id="number"
           label="Phone number"
           fullWidth
-          value={number}
+          value={contact.number}
           onChange={onChange}
           inputProps={{
             pattern: phonePattern,
@@ -157,13 +150,25 @@ export default function ContactEditor({
           type="submit"
           color="primary"
           variant="contained"
-          startIcon={loadingStatus !== LOADING_STATUS.PENDING && <SaveIcon />}
+          startIcon={
+            ((loadingStatus === LOADING_STATUS.IDLE ||
+              loadingStatus === LOADING_STATUS.REJECTED) && <SaveIcon />) ||
+            (loadingStatus === LOADING_STATUS.SUCCESS && <CheckIcon />)
+          }
           fullWidth
           sx={{
             my: 1,
           }}
+          disabled={
+            loadingStatus === LOADING_STATUS.PENDING ||
+            loadingStatus === LOADING_STATUS.SUCCESS
+          }
         >
-          {loadingStatus === LOADING_STATUS.PENDING ? '...loading' : 'save'}
+          {(loadingStatus === LOADING_STATUS.IDLE ||
+            loadingStatus === LOADING_STATUS.IDLE) &&
+            'save'}
+          {loadingStatus === LOADING_STATUS.PENDING && '...loading'}
+          {loadingStatus === LOADING_STATUS.SUCCESS && 'saved'}
         </Button>
         {loadingStatus === LOADING_STATUS.REJECTED && (
           <Alert severity="error">

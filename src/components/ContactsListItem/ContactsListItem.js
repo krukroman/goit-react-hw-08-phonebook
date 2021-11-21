@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid, ListItem, Box, Typography, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import UserPic from 'components/UserPic';
-import { contactsOperations } from 'redux/contacts';
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
+import LOADING_STATUS from 'components/loading-status';
 
 const itemStyle = {
   px: 2,
@@ -15,6 +16,7 @@ const itemStyle = {
 };
 
 export default function ContactsListItem({ id, name, number, enableEditMode }) {
+  const loadingStatus = useSelector(contactsSelectors.getLoadingStatus);
   const dispatch = useDispatch();
 
   const onDeleteContact = () => {
@@ -89,7 +91,11 @@ export default function ContactsListItem({ id, name, number, enableEditMode }) {
             >
               <Edit />
             </IconButton>
-            <IconButton aria-label="delete-contact" onClick={onDeleteContact}>
+            <IconButton
+              aria-label="delete-contact"
+              onClick={onDeleteContact}
+              disabled={loadingStatus === LOADING_STATUS.PENDING}
+            >
               <Delete />
             </IconButton>
           </Box>

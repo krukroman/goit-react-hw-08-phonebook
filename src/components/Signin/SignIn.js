@@ -16,34 +16,27 @@ import HomeButton from 'components/HomeButton';
 
 import { authOperations, authSelectors } from 'redux/auth';
 
+const initialUser = {
+  email: '',
+  password: '',
+};
+
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(initialUser);
   const serverError = useSelector(authSelectors.getServerError);
   const dispatch = useDispatch();
 
   const onFormChange = e => {
     const { name, value } = e.target;
-    switch (name) {
-      case 'email':
-        setEmail(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
-      default:
-        return;
-    }
+    setUser(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   };
   const handleSubmit = e => {
     e.preventDefault();
-    const user = {
-      email,
-      password,
-    };
     dispatch(authOperations.signin(user));
-    setEmail('');
-    setPassword('');
+    setUser(initialUser);
   };
 
   return (
@@ -72,7 +65,7 @@ export default function SignIn() {
           autoComplete="off"
           autoFocus
           onChange={onFormChange}
-          value={email}
+          value={user.email}
         />
         <TextField
           margin="normal"
@@ -84,7 +77,7 @@ export default function SignIn() {
           id="password"
           autoComplete="off"
           onChange={onFormChange}
-          value={password}
+          value={user.password}
         />
         <Button
           type="submit"
