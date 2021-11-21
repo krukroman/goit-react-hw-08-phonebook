@@ -9,7 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
-import isContactExist from 'functions/isContactExist';
+import isContactExist from 'utils/isContactExist';
 import LOADING_STATUS from 'components/loading-status';
 
 const namePattern =
