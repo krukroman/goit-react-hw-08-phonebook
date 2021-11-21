@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Grid,
@@ -9,10 +9,11 @@ import {
   TextField,
   Button,
   Link,
+  Alert,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import HomeButton from 'components/HomeButton';
-import { authOperations } from 'redux/auth';
+import { authOperations, authSelectors } from 'redux/auth';
 
 const initialUser = {
   name: '',
@@ -22,6 +23,7 @@ const initialUser = {
 
 export default function SignUp() {
   const [user, setUser] = useState(initialUser);
+  const serverError = useSelector(authSelectors.getServerError);
   const dispatch = useDispatch();
 
   const onFormChange = e => {
@@ -108,6 +110,11 @@ export default function SignUp() {
             </Link>
           </Grid>
         </Grid>
+        {serverError && (
+          <Alert severity="error" sx={{ my: 1 }}>
+            Email or password is not valid.
+          </Alert>
+        )}
       </Box>
     </Box>
   );

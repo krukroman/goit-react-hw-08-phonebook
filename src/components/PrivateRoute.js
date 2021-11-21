@@ -5,7 +5,6 @@ import { authSelectors } from 'redux/auth';
 
 const PrivatRoute = ({ children, redirectTo = '/' }) => {
   const isLoggedIn = useSelector(authSelectors.getLoginStatus);
-  console.log(isLoggedIn);
   return isLoggedIn ? children : <Navigate to={redirectTo} />;
 };
 
