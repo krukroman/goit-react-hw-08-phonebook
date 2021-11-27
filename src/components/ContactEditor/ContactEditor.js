@@ -164,7 +164,7 @@ export default function ContactEditor({
           }
         >
           {(loadingStatus === LOADING_STATUS.IDLE ||
-            loadingStatus === LOADING_STATUS.IDLE) &&
+            loadingStatus === LOADING_STATUS.REJECTED) &&
             'save'}
           {loadingStatus === LOADING_STATUS.PENDING && '...loading'}
           {loadingStatus === LOADING_STATUS.SUCCESS && 'saved'}
